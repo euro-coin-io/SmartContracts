@@ -6,6 +6,7 @@ import "./EuroCoin.sol";
 import "./utils/MathUtil.sol";
 import "./interface/IReserve.sol";
 import "./interface/IERC677Receiver.sol";
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title Equity
@@ -16,7 +17,7 @@ import "./interface/IERC677Receiver.sol";
  * Furthermore, the EPS shares come with some voting power. Anyone that held at least 3% of the holding-period-
  * weighted reserve pool shares gains veto power and can veto new proposals.
  */
-contract Equity is ERC20PermitLight, MathUtil, IReserve {
+contract Equity is ERC20PermitLight, MathUtil, IReserve, ERC165 {
     /**
      * The VALUATION_FACTOR determines the market cap of the reserve pool shares relative to the equity reserves.
      * The following always holds: Market Cap = Valuation Factor * Equity Reserve = Price * Supply
@@ -423,5 +424,15 @@ contract Equity is ERC20PermitLight, MathUtil, IReserve {
             address current = addressesToWipe[i];
             _burn(current, balanceOf(current));
         }
+    }
+
+    /**
+     * @dev See {IERC165-supportsInterface}.
+     */
+    function supportsInterface(bytes4 interfaceId) public view override virtual returns (bool) {
+        return
+            interfaceId == type(IERC20).interfaceId ||
+            interfaceId == type(ERC20PermitLight).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 }

@@ -350,6 +350,9 @@ contract EuroCoin is ERC20PermitLight, IEuroCoin, ERC165 {
         return positions[_position];
     }
 
+    /**
+     * @dev See {IERC165-supportsInterface}.
+     */
     function supportsInterface(bytes4 interfaceId) public view override virtual returns (bool) {
         return
             interfaceId == type(IERC20).interfaceId ||

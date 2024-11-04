@@ -2,24 +2,15 @@
 
 pragma solidity ^0.8.0;
 
-import "./ERC20.sol";
-import "./ERC20PermitLight.sol";
 import "../Equity.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract FPSWrapper is ERC20 {
+contract FPSWrapper is ERC20{
 
     Equity private immutable fps;
 
-    constructor(Equity fps_) ERC20(18){
+    constructor(Equity fps_) ERC20("Wrapped Frankencoin Pool Share", "WFPS"){
         fps = fps_;
-    }
-
-    function name() external pure override returns (string memory) {
-        return "Wrapped Frankencoin Pool Share";
-    }
-
-    function symbol() external pure override returns (string memory) {
-        return "WFPS";
     }
 
     // requires allowance

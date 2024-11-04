@@ -1,18 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./utils/ERC20PermitLight.sol";
 import "./Equity.sol";
-import "./interface/IReserve.sol";
 import "./interface/IEuroCoin.sol";
+import "./interface/IReserve.sol";
+import "./utils/ERC20.sol";
+import "./utils/ERC20PermitLight.sol";
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title EuroCoin
- * @notice The EuroCoin (ZEUR) is an ERC-20 token that is designed to track the value of the Swiss franc.
+ * @notice The EuroCoin (ZEUR) is an ERC-20 token that is designed to track the value of the Euro.
  * It is not upgradable, but open to arbitrary minting plugins. These are automatically accepted if none of the
  * qualified pool share holders casts a veto, leading to a flexible but conservative governance.
  */
-contract EuroCoin is ERC20PermitLight, IEuroCoin {
+contract EuroCoin is ERC20PermitLight, IEuroCoin, ERC165 {
     /**
      * @notice Minimal fee and application period when suggesting a new minter.
      */
@@ -346,5 +348,12 @@ contract EuroCoin is ERC20PermitLight, IEuroCoin {
      */
     function getPositionParent(address _position) public view override returns (address) {
         return positions[_position];
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view override virtual returns (bool) {
+        return
+            interfaceId == type(IERC20).interfaceId ||
+            interfaceId == type(ERC20PermitLight).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 }

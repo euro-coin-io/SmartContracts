@@ -23,6 +23,8 @@ contract Equity is ERC20PermitLight, MathUtil, IReserve {
      *
      * In the absence of profits and losses, the variables grow as follows when FPS tokens are minted:
      *
+     * TODO: update, for price adjustment. 1000 stablecoin tokens for 1000000 shares
+     *
      * |   Reserve     |   Market Cap  |     Price     |     Supply   |
      * |          1000 |          3000 |             3 |         1000 |
      * |       1000000 |       3000000 |           300 |        10000 |
@@ -106,9 +108,10 @@ contract Equity is ERC20PermitLight, MathUtil, IReserve {
     function price() public view returns (uint256) {
         uint256 equity = zchf.equity();
         if (equity == 0 || totalSupply() == 0) {
-            return ONE_DEC18; // initial price is 1000 ZCHF for the first 1000 FPS
+            // @dev: For Price, 1 = 10^18; 0.001 = 10^15
+            return 10 ** 15; // initial price is 1000 ZCHF for the first 1_000_000 FPS
         } else {
-            return (VALUATION_FACTOR * zchf.equity() * ONE_DEC18) / totalSupply();
+            return (VALUATION_FACTOR * zchf.equity() * 10 ** 18) / totalSupply();
         }
     }
 
@@ -340,7 +343,7 @@ contract Equity is ERC20PermitLight, MathUtil, IReserve {
         uint256 investmentExFees = (investment * 997) / 1000; // remove 0.3% fee
         // Assign 1000 FPS for the initial deposit, calculate the amount otherwise
         uint256 newTotalShares = capitalBefore < MINIMUM_EQUITY || totalShares == 0
-            ? totalShares + 1000 * ONE_DEC18
+            ? totalShares + 1_000_000 * ONE_DEC18
             : _mulD18(totalShares, _cubicRoot(_divD18(capitalBefore + investmentExFees, capitalBefore)));
         return newTotalShares - totalShares;
     }

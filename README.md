@@ -2,7 +2,7 @@
 
 This is the source code repository for the smart contracts of the oracle-free, collateralized stablecoin dEURO.
 
-There also is a [public frontend and a documentation page](https://d-euro.io).
+There also is a [public frontend](https://d-euro.io) and a [documentation page](https://docs.d-euro.io/positions/open).
 
 ## Source Code
 

@@ -23,7 +23,6 @@ contract Equity is ERC20PermitLight, MathUtil, IReserve {
      *
      * In the absence of profits and losses, the variables grow as follows when nDEPS tokens are minted:
      *
-     *
      * |   Reserve     |   Market Cap  |     Price     |     Supply   |
      * |          1000 |          3000 |         0.003 |      1000000 |
      * |       1000000 |       3000000 |           0.3 |     10000000 |

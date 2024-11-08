@@ -7,7 +7,7 @@ import "./interface/IdEURO.sol";
 
 /**
  * @title Stable Coin Bridge
- * @notice A minting contract for another Swiss franc stablecoin ('source stablecoin') that we trust.
+ * @notice A minting contract for another EURO stablecoin ('source stablecoin') that we trust.
  * @author dEURO
  */
 contract StablecoinBridge {

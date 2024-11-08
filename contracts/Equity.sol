@@ -13,7 +13,7 @@ import "./interface/IERC677Receiver.sol";
  * Like with a corporation, the owners of the equity capital are the shareholders, or in this case the holders
  * of native dEURO Protocol Shares (nDEPS) tokens. Anyone can mint additional nDEPS tokens by adding dEUROs to the
  * reserve pool. Also, nDEPS tokens can be redeemed for dEUROs again after a minimum holding period.
- * Furthermore, the nDEPS shares come with some voting power. Anyone that held at least 3% of the holding-period-
+ * Furthermore, the nDEPS shares come with some voting power. Anyone that held at least 2% of the holding-period-
  * weighted reserve pool shares gains veto power and can veto new proposals.
  */
 contract Equity is ERC20PermitLight, MathUtil, IReserve {
@@ -25,11 +25,11 @@ contract Equity is ERC20PermitLight, MathUtil, IReserve {
      *
      * TODO: update, for price adjustment. 1000 stablecoin tokens for 1000000 shares
      *
-     * |   Reserve     |   Market Cap  |     Price     |     Supply   |
-     * |          1000 |          3000 |             3 |         1000 |
-     * |       1000000 |       3000000 |           300 |        10000 |
-     * |    1000000000 |    3000000000 |         30000 |       100000 |
-     * | 1000000000000 | 3000000000000 |       3000000 |      1000000 |
+     * |   Reserve     |   Market Cap  |     Price     |     Supply      |
+     * |          1000 |          3000 |         0.003 |         1000000 |
+     * |       1000000 |       3000000 |           0.3 |        10000000 |
+     * |    1000000000 |    3000000000 |            30 |       100000000 |
+     * | 1000000000000 | 3000000000000 |          3000 |      1000000000 |
      *
      * I.e., the supply is proporational to the cubic root of the reserve and the price is proportional to the
      * squared cubic root. When profits accumulate or losses materialize, the reserve, the market cap,

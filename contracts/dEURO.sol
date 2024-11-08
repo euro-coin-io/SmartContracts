@@ -8,7 +8,7 @@ import "./interface/IdEURO.sol";
 
 /**
  * @title dEURO
- * @notice The dEURO (dEURO) is an ERC-20 token that is designed to track the value of the Swiss franc.
+ * @notice The dEURO (dEURO) is an ERC-20 token that is designed to track the value of the Euro.
  * It is not upgradable, but open to arbitrary minting plugins. These are automatically accepted if none of the
  * qualified pool share holders casts a veto, leading to a flexible but conservative governance.
  */

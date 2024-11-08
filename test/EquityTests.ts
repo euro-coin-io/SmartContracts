@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { floatToDec18 } from "../scripts/math";
 import { ethers } from "hardhat";
 import { evm_increaseTime, evm_mine_blocks } from "./helper";
-import { Equity, Frankencoin, StablecoinBridge, TestToken } from "../typechain";
+import { Equity, dEURO, StablecoinBridge, TestToken } from "../typechain";
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 
 describe("Equity Tests", () => {
@@ -12,55 +12,55 @@ describe("Equity Tests", () => {
 
   let equity: Equity;
   let bridge: StablecoinBridge;
-  let zchf: Frankencoin;
-  let xchf: TestToken;
+  let dEURO: dEURO;
+  let x: TestToken;
 
   before(async () => {
     [owner, alice, bob] = await ethers.getSigners();
 
     const xchfFactory = await ethers.getContractFactory("TestToken");
-    xchf = await xchfFactory.deploy("CryptoFranc", "XCHF", 18);
+    xchf = await xchfFactory.deploy("CryptoEuro", "XCHF", 18);
   });
 
   beforeEach(async () => {
-    const frankenCoinFactory = await ethers.getContractFactory("Frankencoin");
-    zchf = await frankenCoinFactory.deploy(10 * 86400);
+    const dEUROFactory = await ethers.getContractFactory("dEURO");
+    dEURO = await dEUROFactory.deploy(10 * 86400);
 
     let supply = floatToDec18(1000_000);
     const bridgeFactory = await ethers.getContractFactory("StablecoinBridge");
     bridge = await bridgeFactory.deploy(
       await xchf.getAddress(),
-      await zchf.getAddress(),
+      await dEURO.getAddress(),
       floatToDec18(100_000_000_000)
     );
-    await zchf.initialize(await bridge.getAddress(), "");
+    await dEURO.initialize(await bridge.getAddress(), "");
 
     await xchf.mint(owner.address, supply);
     await xchf.approve(await bridge.getAddress(), supply);
     await bridge.mint(supply);
-    await zchf.transfer(bob.address, floatToDec18(5000));
-    equity = await ethers.getContractAt("Equity", await zchf.reserve());
+    await dEURO.transfer(bob.address, floatToDec18(5000));
+    equity = await ethers.getContractAt("Equity", await dEURO.reserve());
   });
 
   describe("basic initialization", () => {
-    it("should have symbol ZCHF", async () => {
-      let symbol = await zchf.symbol();
-      expect(symbol).to.be.equal("ZCHF");
+    it("should have symbol dEURO", async () => {
+      let symbol = await dEURO.symbol();
+      expect(symbol).to.be.equal("dEURO");
     });
-    it("should have symbol FPS", async () => {
+    it("should have symbol nDEPS", async () => {
       let symbol = await equity.symbol();
-      expect(symbol).to.be.equal("FPS");
+      expect(symbol).to.be.equal("nDEPS");
     });
     it("should have the right name", async () => {
       let symbol = await equity.name();
-      expect(symbol).to.be.equal("Frankencoin Pool Share");
+      expect(symbol).to.be.equal("dEURO Pool Share");
     });
-    it("should have inital price 1 ZCHF / FPS", async () => {
+    it("should have inital price 1 dEURO / nDEPS", async () => {
       let price = await equity.price();
       expect(price).to.be.equal(BigInt(1e18));
     });
     it("should have some coins", async () => {
-      let balance = await zchf.balanceOf(owner.address);
+      let balance = await dEURO.balanceOf(owner.address);
       expect(balance).to.be.equal(floatToDec18(1000_000 - 5000));
     });
   });
@@ -79,8 +79,8 @@ describe("Equity Tests", () => {
     // it("should revert minting when total supply exceeds max of uint96", async () => {
     //   await equity.invest(floatToDec18(1000), 0);
     //   const amount = floatToDec18(80_000_000_000);
-    //   await xchf.mint(owner.address, amount);
-    //   await xchf.approve(await bridge.getAddress(), amount);
+    //   await x.mint(owner.address, amount);
+    //   await x.approve(await bridge.getAddress(), amount);
     //   await bridge.mint(amount);
     //   await equity.invest(amount, 0);
     //   await expect(equity.invest(amount, 0)).to.be.revertedWith(
@@ -89,7 +89,7 @@ describe("Equity Tests", () => {
     // });
     it("should create an initial share", async () => {
       const expected = await equity.calculateShares(floatToDec18(1000));
-      await zchf.transfer(await equity.getAddress(), 1);
+      await dEURO.transfer(await equity.getAddress(), 1);
       const price = await equity.price();
       expect(price).to.be.equal(floatToDec18(1));
       await equity.calculateShares(floatToDec18(1000));
@@ -136,7 +136,7 @@ describe("Equity Tests", () => {
 
       const redemptionAmount =
         (await equity.balanceOf(owner.address)) - floatToDec18(1000.0);
-      const equityCapital = await zchf.balanceOf(await equity.getAddress());
+      const equityCapital = await dEURO.balanceOf(await equity.getAddress());
       const proceeds = await equity.calculateProceeds(redemptionAmount);
       expect(proceeds).to.be.approximately(
         (equityCapital * 7n) / 8n,
@@ -155,11 +155,11 @@ describe("Equity Tests", () => {
         equity.redeemExpected(owner.address, redemptionAmount, proceeds * 2n)
       ).to.be.revertedWithoutReason();
 
-      const beforeBal = await zchf.balanceOf(alice.address);
+      const beforeBal = await dEURO.balanceOf(alice.address);
       await expect(
         equity.redeemExpected(alice.address, redemptionAmount, proceeds)
       ).to.be.emit(equity, "Trade");
-      const afterBal = await zchf.balanceOf(alice.address);
+      const afterBal = await dEURO.balanceOf(alice.address);
       expect(afterBal - beforeBal).to.be.equal(proceeds);
     });
     it("should be able to redeem allowed shares for share holder", async () => {
@@ -170,7 +170,7 @@ describe("Equity Tests", () => {
       await equity.approve(alice.address, redemptionAmount);
 
       const proceeds = await equity.calculateProceeds(redemptionAmount);
-      const beforeBal = await zchf.balanceOf(bob.address);
+      const beforeBal = await dEURO.balanceOf(bob.address);
       await expect(
         equity
           .connect(alice)
@@ -184,7 +184,7 @@ describe("Equity Tests", () => {
       await equity
         .connect(alice)
         .redeemFrom(owner.address, bob.address, redemptionAmount, proceeds);
-      const afterBal = await zchf.balanceOf(bob.address);
+      const afterBal = await dEURO.balanceOf(bob.address);
       expect(afterBal - beforeBal).to.be.equal(proceeds);
     });
   });
@@ -314,7 +314,7 @@ describe("Equity Tests", () => {
       ).to.be.revertedWithoutReason();
     });
     it("should revert qualified check when not meet quorum", async () => {
-      await zchf.transfer(alice.address, 1);
+      await dEURO.transfer(alice.address, 1);
       await equity.connect(alice).invest(1, 0);
       await expect(
         equity.checkQualified(alice.address, [])
@@ -323,13 +323,13 @@ describe("Equity Tests", () => {
   });
   describe("restructure cap table", () => {
     it("should revert restructure when have enough equity", async () => {
-      await zchf.transfer(await equity.getAddress(), floatToDec18(1000));
+      await dEURO.transfer(await equity.getAddress(), floatToDec18(1000));
       await expect(
         equity.restructureCapTable([], [])
       ).to.be.revertedWithoutReason();
     });
     it("should burn equity balances of given users", async () => {
-      await zchf.transfer(await equity.getAddress(), floatToDec18(100));
+      await dEURO.transfer(await equity.getAddress(), floatToDec18(100));
       await equity.restructureCapTable([], [alice.address, bob.address]);
     });
   });

@@ -23,13 +23,12 @@ contract Equity is ERC20PermitLight, MathUtil, IReserve {
      *
      * In the absence of profits and losses, the variables grow as follows when nDEPS tokens are minted:
      *
-     * TODO: update, for price adjustment. 1000 stablecoin tokens for 1000000 shares
      *
-     * |   Reserve     |   Market Cap  |     Price     |     Supply      |
-     * |          1000 |          3000 |         0.003 |         1000000 |
-     * |       1000000 |       3000000 |           0.3 |        10000000 |
-     * |    1000000000 |    3000000000 |            30 |       100000000 |
-     * | 1000000000000 | 3000000000000 |          3000 |      1000000000 |
+     * |   Reserve     |   Market Cap  |     Price     |     Supply   |
+     * |          1000 |          3000 |         0.003 |      1000000 |
+     * |       1000000 |       3000000 |           0.3 |     10000000 |
+     * |    1000000000 |    3000000000 |            30 |    100000000 |
+     * | 1000000000000 | 3000000000000 |          3000 |   1000000000 |
      *
      * I.e., the supply is proporational to the cubic root of the reserve and the price is proportional to the
      * squared cubic root. When profits accumulate or losses materialize, the reserve, the market cap,

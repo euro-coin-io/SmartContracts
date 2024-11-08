@@ -2,19 +2,19 @@
 
 This is the source code repository for the smart contracts of the oracle-free, collateralized stablecoin dEURO.
 
-There also is a [public frontend](https://dEURO.com), a [documentation page](https://docs.dEURO.com), an outdated [dEURO Research Paper](https://www.snb.ch/n/mmr/reference/sem_2022_06_03_maire/source/sem_2022_06_03_maire.n.pdf), and a more recent chapter of a [pending phd thesis](https://dEURO.com/thesis-preprint-dEURO.pdf).
+There also is a [public frontend and a documentation page](https://d-euro.io).
 
 ## Source Code
 
 The source code can be found in the [contracts](contracts) folder. The following are the most important contracts.
 
-| Contract             | Description                                     |
-| -------------------- | ----------------------------------------------- |
-| dEURO.sol      | The dEURO (dEURO) ERC20 token              |
+| Contract             | Description                                            |
+| -------------------- | -----------------------------------------------        |
+| dEURO.sol            | The dEURO (dEURO) ERC20 token                          |
 | Equity.sol           | The native dEURO Protocol Shares (nDEPS) ERC20 token   |
-| MintingHub.sol       | Plugin for oracle-free collateralized minting   |
-| Position.sol         | A borrowed minting position holding collateral  |
-| StablecoinBridge.sol | Plugin for 1:1 swaps with other CHF stablecoins |
+| MintingHub.sol       | Plugin for oracle-free collateralized minting          |
+| Position.sol         | A borrowed minting position holding collateral         |
+| StablecoinBridge.sol | Plugin for 1:1 swaps with other CHF stablecoins        |
 
 ## Compiling and Testing
 

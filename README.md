@@ -1,20 +1,22 @@
-# FrankenCoin
+# dEURO
 
-This is the source code repository for the smart contracts of the oracle-free, collateralized stablecoin Frankencoin.
+This is the source code repository for the smart contracts of the oracle-free, collateralized stablecoin dEURO.
 
-There also is a [public frontend](https://frankencoin.com), a [documentation page](https://docs.frankencoin.com), an outdated [Frankencoin Research Paper](https://www.snb.ch/n/mmr/reference/sem_2022_06_03_maire/source/sem_2022_06_03_maire.n.pdf), and a more recent chapter of a [pending phd thesis](https://frankencoin.com/thesis-preprint-frankencoin.pdf).
+There also is a [public frontend](https://d-euro.io) and a [documentation page](https://docs.d-euro.io/positions/open).
+
+This code is a friendly fork of Frankencoin-ZCHF. The fundamental mechanisms have not been changed. Frankencoin originated from the doctoral thesis of Dr. Luzius Meisser, which can be viewed at https://app.frankencoin.com/thesis-frankencoin.pdf.
 
 ## Source Code
 
 The source code can be found in the [contracts](contracts) folder. The following are the most important contracts.
 
-| Contract             | Description                                     |
-| -------------------- | ----------------------------------------------- |
-| Frankencoin.sol      | The Frankencoin (ZCHF) ERC20 token              |
-| Equity.sol           | The Frankencoin Pool Shares (FPS) ERC20 token   |
-| MintingHub.sol       | Plugin for oracle-free collateralized minting   |
-| Position.sol         | A borrowed minting position holding collateral  |
-| StablecoinBridge.sol | Plugin for 1:1 swaps with other CHF stablecoins |
+| Contract             | Description                                            |
+| -------------------- | -----------------------------------------------        |
+| dEURO.sol            | The dEURO (dEURO) ERC20 token                          |
+| Equity.sol           | The native dEURO Protocol Shares (nDEPS) ERC20 token   |
+| MintingHub.sol       | Plugin for oracle-free collateralized minting          |
+| Position.sol         | A borrowed minting position holding collateral         |
+| StablecoinBridge.sol | Plugin for 1:1 swaps with other CHF stablecoins        |
 
 ## Compiling and Testing
 
@@ -48,7 +50,7 @@ Recommanded commands for `sepolia` network.
 
 ```shell
 hh deploy --network sepolia --tags MockTokens
-hh deploy --network sepolia --tags Frankencoin
+hh deploy --network sepolia --tags dEURO
 hh deploy --network sepolia --tags PositionFactory
 hh deploy --network sepolia --tags MintingHub
 hh deploy --network sepolia --tags MockCHFToken

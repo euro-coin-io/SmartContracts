@@ -301,7 +301,7 @@ contract Equity is ERC20PermitLight, MathUtil, IReserve {
     }
 
     /**
-     * @notice Call this method to obtain newly minted pool shares in exchange for .
+     * @notice Call this method to obtain newly minted pool shares in exchange for dEUROs.
      * No allowance required (i.e. it is hardcoded in the dEURO token contract).
      * Make sure to invest at least 10e-12 * market cap to avoid rounding losses.
      *

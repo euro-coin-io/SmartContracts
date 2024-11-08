@@ -79,8 +79,8 @@ describe("Equity Tests", () => {
     // it("should revert minting when total supply exceeds max of uint96", async () => {
     //   await equity.invest(floatToDec18(1000), 0);
     //   const amount = floatToDec18(80_000_000_000);
-    //   await x.mint(owner.address, amount);
-    //   await x.approve(await bridge.getAddress(), amount);
+    //   await xeuro.mint(owner.address, amount);
+    //   await xeuro.approve(await bridge.getAddress(), amount);
     //   await bridge.mint(amount);
     //   await equity.invest(amount, 0);
     //   await expect(equity.invest(amount, 0)).to.be.revertedWith(

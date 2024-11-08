@@ -13,7 +13,7 @@ describe("Equity Tests", () => {
   let equity: Equity;
   let bridge: StablecoinBridge;
   let dEURO: dEURO;
-  let x: TestToken;
+  let xEURO: TestToken;
 
   before(async () => {
     [owner, alice, bob] = await ethers.getSigners();

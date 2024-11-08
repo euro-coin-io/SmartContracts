@@ -47,7 +47,7 @@ describe("Position Tests", () => {
     );
     // mocktoken
     const testTokenFactory = await ethers.getContractFactory("TestToken");
-    mockXCHF = await testTokenFactory.deploy("CryptoFranc", "XCHF", 18);
+    mockXCHF = await testTokenFactory.deploy("CryptoEuro", "XCHF", 18);
     // mocktoken bridge to bootstrap
     limit = floatToDec18(1_000_000);
     const bridgeFactory = await ethers.getContractFactory("StablecoinBridge");

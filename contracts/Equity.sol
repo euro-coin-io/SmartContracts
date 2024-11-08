@@ -32,7 +32,7 @@ contract Equity is ERC20PermitLight, MathUtil, IReserve {
      * I.e., the supply is proporational to the cubic root of the reserve and the price is proportional to the
      * squared cubic root. When profits accumulate or losses materialize, the reserve, the market cap,
      * and the price are adjusted proportionally, with the supply staying constant. In the absence of an extreme
-     * inflation of the Swiss franc, it is unlikely that there will ever be more than ten million nDEPS.
+     * inflation of the Euro, it is unlikely that there will ever be more than ten million nDEPS.
      */
     uint32 public constant VALUATION_FACTOR = 3;
 

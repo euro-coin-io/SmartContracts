@@ -2,8 +2,8 @@
     {
         "inputs": [
             {
-                "internalType": "contract Frankencoin",
-                "name": "zchf_",
+                "internalType": "contract dEURO",
+                "name": "dEURO_",
                 "type": "address"
             }
         ],
@@ -793,10 +793,10 @@
     },
     {
         "inputs": [],
-        "name": "zchf",
+        "name": "dEURO",
         "outputs": [
             {
-                "internalType": "contract Frankencoin",
+                "internalType": "contract dEURO",
                 "name": "",
                 "type": "address"
             }

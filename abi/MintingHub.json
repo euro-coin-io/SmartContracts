@@ -3,7 +3,7 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "_zchf",
+                "name": "_dEURO",
                 "type": "address"
             },
             {
@@ -136,7 +136,7 @@
             {
                 "indexed": false,
                 "internalType": "address",
-                "name": "zchf",
+                "name": "dEURO",
                 "type": "address"
             },
             {
@@ -512,10 +512,10 @@
     },
     {
         "inputs": [],
-        "name": "zchf",
+        "name": "dEURO",
         "outputs": [
             {
-                "internalType": "contract IFrankencoin",
+                "internalType": "contract IdEURO",
                 "name": "",
                 "type": "address"
             }

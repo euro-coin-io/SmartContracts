@@ -97,6 +97,28 @@
         "type": "error"
     },
     {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "ERC20InvalidUnderlying",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "SafeERC20FailedOperation",
+        "type": "error"
+    },
+    {
         "anonymous": false,
         "inputs": [
             {
@@ -235,7 +257,7 @@
             },
             {
                 "internalType": "uint256",
-                "name": "amount",
+                "name": "value",
                 "type": "uint256"
             }
         ],
@@ -403,7 +425,7 @@
             },
             {
                 "internalType": "uint256",
-                "name": "amount",
+                "name": "value",
                 "type": "uint256"
             }
         ],
